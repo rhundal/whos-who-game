@@ -1,0 +1,32 @@
+.mainContainer {
+
+    background-color: #a7a7c5;
+
+}
+
+h1 {
+    color: #474b51;
+}
+
+.header {
+
+    text-align: center;
+}
+
+.btn-style {
+
+    width: 100px;
+    margin-left: 15px;
+}
+
+.sizing {
+
+    width: 200px;
+    height: 200px;
+}
+
+.btn-style2 {
+
+    width: 105px;
+    align-items: left;
+}
