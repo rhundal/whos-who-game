@@ -8,9 +8,9 @@ import "./Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Home = () => {
-  const [genre, setGenre] = useState({ genre: "pop" });
-  const [artist, setArtist] = useState({ artist: 2 });
-  const [song, setSong] = useState({ song: 1 });
+  const [genre, setGenre] = useState(null);
+  const [artist, setArtist] = useState(null);
+  const [song, setSong] = useState(null);
   const [genres, setGenres] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
@@ -27,6 +27,30 @@ const Home = () => {
     setGenres(response.genres);
     setConfigLoading(false);
   };
+
+  useEffect(() => {
+    if (genre === null) {
+      const savedGenre = JSON.parse(localStorage.getItem("genreKey"));
+      setGenre(savedGenre != null ? savedGenre : "");
+    }
+    localStorage.setItem("genreKey", JSON.stringify(genre));
+  }, [genre]);
+
+  useEffect(() => {
+    if (song === null) {
+      const savedSongs = JSON.parse(localStorage.getItem("songsKey"));
+      setSong(savedSongs != null ? savedSongs : 1);
+    }
+    localStorage.setItem("songsKey", JSON.stringify(song));
+  }, [song]);
+
+  useEffect(() => {
+    if (artist === null) {
+      const savedArtists = JSON.parse(localStorage.getItem("artistsKey"));
+      setArtist(savedArtists != null ? savedArtists : 2);
+    }
+    localStorage.setItem("artistsKey", JSON.stringify(artist));
+  }, [artist]);
 
   useEffect(() => {
     setAuthLoading(true);
@@ -58,11 +82,11 @@ const Home = () => {
     return <div>Loading...</div>;
   }
 
-  const handleSubmit = (e) => {
-    localStorage.setItem("genre", JSON.stringify(genre));
-    localStorage.setItem("artist", JSON.stringify(artist));
-    localStorage.setItem("song", JSON.stringify(song));
-  };
+  // const handleSubmit = (e) => {
+  //   localStorage.setItem("genre", JSON.stringify(genre));
+  //   localStorage.setItem("artist", JSON.stringify(artist));
+  //   localStorage.setItem("song", JSON.stringify(song));
+  // };
 
   const handleGenreSelect = (e) => {
     setGenre({ genre: e.target.value });
@@ -71,12 +95,12 @@ const Home = () => {
   };
 
   const handleArtistSelect = (e) => {
-    setArtist({ artist: parseInt(e.target.value) });
+    setArtist(e.target.value);
     console.log("artist: " + e.target.value);
   };
 
   const handleSongSelect = (e) => {
-    setSong({ song: parseInt(e.target.value) });
+    setSong(e.target.value);
     console.log("song: " + e.target.value);
   };
 
@@ -96,7 +120,7 @@ const Home = () => {
               <form
                 action="/game"
                 className="form-inline"
-                onSubmit={handleSubmit}
+                // onSubmit={handleSubmit}
               >
                 <label className="my-1 mr-2" for="inlineFormCustomSelectPref">
                   {" "}
@@ -117,7 +141,7 @@ const Home = () => {
                 <select
                   className="custom-select my-1 mr-sm-2"
                   id="mySelect"
-                  defaultValue="2"
+                  value={artist}
                   onChange={handleArtistSelect}
                   required
                 >
@@ -133,7 +157,7 @@ const Home = () => {
                 <select
                   className="custom-select my-1 mr-sm-2"
                   id="mySelect"
-                  defaultValue="1"
+                  value={song}
                   onChange={handleSongSelect}
                   required
                 >
