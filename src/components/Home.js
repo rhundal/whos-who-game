@@ -1,73 +1,58 @@
-import React, { useEffect, useState } from 'react'
-import fetchFromSpotify, { request } from '../services/api'
-
-const AUTH_ENDPOINT =
-  'https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token'
-const TOKEN_KEY = 'whos-who-access-token'
+import React, { useState } from 'react'
 
 const Home = () => {
-  const [genres, setGenres] = useState([])
-  const [selectedGenre, setSelectedGenre] = useState('')
-  const [authLoading, setAuthLoading] = useState(false)
-  const [configLoading, setConfigLoading] = useState(false)
-  const [token, setToken] = useState('')
 
-  const loadGenres = async t => {
-    setConfigLoading(true)
-    const response = await fetchFromSpotify({
-      token: t,
-      endpoint: 'recommendations/available-genre-seeds'
-    })
-    console.log(response)
-    setGenres(response.genres)
-    setConfigLoading(false)
-  }
+  const [genre, setGenre] = useState({genre: "pop"});
+  const [artist, setArtist] = useState({artist: 2});
+  const [song, setSong] = useState({song: 1});
 
-  useEffect(() => {
-    setAuthLoading(true)
+  const handleSubmit = (e) => {
+   localStorage.setItem("genre", JSON.stringify(genre));
+   localStorage.setItem("artist", JSON.stringify(artist));
+   localStorage.setItem("song", JSON.stringify(song));
+  };
 
-    const storedTokenString = localStorage.getItem(TOKEN_KEY)
-    if (storedTokenString) {
-      const storedToken = JSON.parse(storedTokenString)
-      if (storedToken.expiration > Date.now()) {
-        console.log('Token found in localstorage')
-        setAuthLoading(false)
-        setToken(storedToken.value)
-        loadGenres(storedToken.value)
-        return
-      }
-    }
-    console.log('Sending request to AWS endpoint')
-    request(AUTH_ENDPOINT).then(({ access_token, expires_in }) => {
-      const newToken = {
-        value: access_token,
-        expiration: Date.now() + (expires_in - 20) * 1000
-      }
-      localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken))
-      setAuthLoading(false)
-      setToken(newToken.value)
-      loadGenres(newToken.value)
-    })
-  }, [])
+  const handleGenreSelect = (e) => {
+    setGenre({genre: e.target.value})
+    console.log("genre: " + e.target.value)
+  };
 
-  if (authLoading || configLoading) {
-    return <div>Loading...</div>
-  }
+  const handleArtistSelect = (e) => {
+    setArtist({artist: parseInt(e.target.value)})
+    console.log("artist: " + e.target.value)
+  };
+
+  const handleSongSelect = (e) => {
+    setSong({song: parseInt(e.target.value)})
+    console.log("song: " + e.target.value)
+  };
 
   return (
-    <div>
-      Genre:
-      <select
-        value={selectedGenre}
-        onChange={event => setSelectedGenre(event.target.value)}
-      >
-        <option value='' />
-        {genres.map(genre => (
-          <option key={genre} value={genre}>
-            {genre}
-          </option>
-        ))}
-      </select>
+    <div id="main-container">
+      <h1>Who's Who?</h1>
+      <div className="menu-container">
+        <form action="/game" onSubmit={handleSubmit}>
+          <span>Genre: </span>
+          <select id="mySelect" defaultValue="pop" onChange={handleGenreSelect} required>
+            <option value="pop">pop</option>
+            <option value="hip-hop">hip-hop</option>
+            <option value="rock">rock</option>
+          </select>
+          <span>Number of songs: </span>
+          <select id="mySelect" defaultValue="1" onChange={handleSongSelect} required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+          <span>Number of artists: </span>
+          <select id="mySelect" defaultValue="2" onChange={handleArtistSelect} required>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+          <button type="submit" id="submit" required>Submit</button>
+        </form>
+      </div>
     </div>
   )
 }
