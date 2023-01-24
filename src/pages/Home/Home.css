@@ -1,0 +1,20 @@
+.mainContainer {
+
+    background-color: #a7a7c5;
+
+}
+
+h1 {
+    color: #474b51;
+}
+
+.header {
+
+    text-align: center;
+}
+
+.btn-style {
+
+    width: 100px;
+    margin-left: 15px;
+}
