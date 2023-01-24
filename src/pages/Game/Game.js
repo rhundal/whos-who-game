@@ -20,6 +20,10 @@ const Game = () => {
   const num = songNum.song
   const imgNum = artistNum.artist
 
+  // const [winStatus, setWinStatus] = useState("false");
+  // const [numTries, setNumTries] = useState(0);
+  // const [answer, setAnswer] = useState('');
+
   useEffect(() => {
     setAuthLoading(true)
     const storedTokenString = localStorage.getItem(TOKEN_KEY)
@@ -80,10 +84,26 @@ const Game = () => {
     return <div>Loading...</div>
   }
 
+  // //feed answers
+
+  // lose win logic
+
+  // useEffect(() => {
+  //   if (numTries > 0 && answerSelected !== "correct") {
+
+  //     setLoseStatus(true);
+  //   }
+  //   else {
+  //     setWinStatus(true);
+  //   }
+
+
+  // }, [])
+
+
   return (
 
     <>
-
       <div className='container mainContainer'>
         <div className='row'>
           <div className='col'>
@@ -109,51 +129,66 @@ const Game = () => {
 
                   {artists.length > imgNum
                     ? artists.slice(0, imgNum).map((artist) => (
+                      <>
+                        <div className='col' key={artist.id}>
+                          <img src={artist.images[0].url} className="rounded-lg sizing" />
+                          <p>{artist.name}</p>
+                        </div>
 
-                      <div className='col' key={artist.id}>
-                        <img src={artist.images[0].url} className="rounded-lg sizing" />
-                        <p>{artist.name}</p>
-                      </div>
+                      </>
                     ))
                     : 'No Images to display'}
                 </div>
-                <div className='row mt-4'>
-                  <ul className="list-unstyled">
-                    <li className="media">
-                      <div className="media-body">
 
+                <div className='row'>
 
-                        <h5 className="col mt-0 mb-3 ml-4"> Play Tracks </h5>
+                  {songs.map((song) => {
 
-                        <div className='col'>
+                    <div className="form-check" key={song.id}>
+                      <input type="radio" name={i} value={answer} onClick={() => checkAnswer(answer)} aria-label="Option 1" />
+                    </div>
+                  })}
+                  <button type="submit" className="btn btn-primary mt-3">Submit Answer</button>
 
-
-                          {songs.length > 0 ? (
-                            songs
-                              .slice(0, num)
-                              .map((song) => (
-                                <ReactAudioPlayer
-                                  key={song.id}
-                                  src={song.preview_url}
-                                  autoPlay={false}
-                                  controls
-                                />
-                              ))
-                          ) : (
-                            <button onClick={() => window.location.reload()}>
-                              No Songs for this Artist: Try again?
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
+
+              </div>
+              <div className='row mt-4'>
+                <ul className="list-unstyled">
+                  <li className="media">
+                    <div className="media-body">
+
+
+                      <h5 className="col mt-0 mb-3 ml-4"> Play Tracks </h5>
+
+                      <div className='col'>
+
+
+                        {songs.length > 0 ? (
+                          songs
+                            .slice(0, num)
+                            .map((song) => (
+                              <ReactAudioPlayer
+                                key={song.id}
+                                src={song.preview_url}
+                                autoPlay={false}
+                                controls
+                              />
+                            ))
+                        ) : (
+                          <button onClick={() => window.location.reload()}>
+                            No Songs for this Artist: Try again?
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
 
   )
