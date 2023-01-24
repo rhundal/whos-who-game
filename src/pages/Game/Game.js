@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useHistory } from 'react'
 import fetchFromSpotify, { request } from '../../services/api'
-import ReactAudioPlayer from 'react-audio-player'
 import './Game.css'
+
+import Player from '../../components/Player/Player'
+
 import { Link } from 'react-router-dom'
+
 
 const AUTH_ENDPOINT =
   'https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token'
@@ -84,6 +87,15 @@ const Game = () => {
     return <div>Loading...</div>
   }
 
+  // Check if artist name is the same as artist name in song data
+
+  // function checkGuess() {
+  //   if (artists[random].name === songs[random])
+  // }
+
+  console.log(artists[random])
+  console.log(songs[random])
+
   // //feed answers
 
   // lose win logic
@@ -104,6 +116,7 @@ const Game = () => {
   return (
 
     <>
+
       <div className='container mainContainer'>
         <div className='row'>
           <div className='col'>
@@ -113,20 +126,15 @@ const Game = () => {
                 <div className='row'>
                   <div className='col xs-6 sm-4'>
                     <p className="lead">Play the song and guess the artist. </p>
-
                   </div>
                   <div className='col xs-6 sm-8'>
                     <button className="btn btn-info btn-style2 mt-2">
                       <Link to="/" style={{ textDecoration: 'none', color: 'white' }}> Home </Link>
                     </button>
-
                   </div>
                 </div>
-
                 <hr className="my-4" />
-
                 <div className='row'>
-
                   {artists.length > imgNum
                     ? artists.slice(0, imgNum).map((artist) => (
                       <>
@@ -193,4 +201,5 @@ const Game = () => {
 
   )
 }
+
 export default Game
