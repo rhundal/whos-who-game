@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useHistory } from 'react'
 import fetchFromSpotify, { request } from '../../services/api'
+import loader from '../../assets/loading.svg'
 import './Game.css'
 
 import Player from '../../components/Player/Player'
 
 import { Link } from 'react-router-dom'
-
 
 const AUTH_ENDPOINT =
   'https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token'
@@ -80,76 +80,44 @@ const Game = () => {
   }
 
   if (authLoading || configLoading) {
-    return <div>Loading...</div>
+    return (
+      <div className='loader'>
+        <img src={loader} />
+      </div>
+    )
   }
 
-  // Check if artist name is the same as artist name in song data
-
-  // function checkGuess() {
-  //   if (artists[random].name === songs[random])
-  // }
- 
   console.log(artists[random])
   console.log(songs[random])
 
   return (
-      <div className='container mainContainer'>
-        <div className='row'>
-          <div className='col'>
-            <div className="jumbotron jumbotron-fluid">
-              <div className="container">
-                <h1 className="display-4"> Guess !!</h1>
-                <div className='row'>
-                  <div className='col xs-6 sm-4'>
-                    <p className="lead">Play the song and guess the artist. </p>
-                  </div>
-                  <div className='col xs-6 sm-8'>
-                    <button className="btn btn-info btn-style2 mt-2">
-                      <Link to="/" style={{ textDecoration: 'none', color: 'white' }}> Home </Link>
-                    </button>
-                  </div>
-                </div>
-                <hr className="my-4" />
-                <div className='row'>
-                  {artists.length > imgNum
-                    ? artists.slice(0, imgNum).map((artist) => (
-
-                      <div className='col' key={artist.id}>
-                        <img src={artist.images[0].url} className="rounded-lg sizing" />
-                        <p>{artist.name}</p>
-                      </div>
-                    ))
-                    : 'No Images to display'}
-                </div>
-                <div className='row mt-4'>
-                  <ul className="list-unstyled">
-                    <li className="media">
-                      <div className="media-body">
-                        <h5 className="col mt-0 mb-3 ml-4"> Play Tracks </h5>
-                        <div className='col'>
-                          <div className='buttonContainer'>
-                          {songs.length > 0 ? (
-                            songs
-                              .slice(0, num)
-                              .map((song) => (
-                                <Player song={song} />
-                              ))
-                            ) : (
-                            <button onClick={() => window.location.reload()}>
-                              No Songs for this Artist: Try again?
-                            </button>
-                          )}
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+    <div className='game-container'>
+      <button className='home-btn'>
+        <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+          {' '}
+          Home{' '}
+        </Link>
+      </button>
+      <h3>Play the song and guess the artist.</h3>
+      <hr className='line' />
+      <div className='img-container'>
+        {artists.length > imgNum
+          ? artists.slice(0, imgNum).map((artist) => (
+              <div className='image' key={artist.id}>
+                <img src={artist.images[0].url} />
+                <p>{artist.name}</p>
               </div>
-            </div>
-          </div>
-        </div>
+            ))
+          : 'No Images to display'}
       </div>
+      {songs.length > 0 ? (
+        songs.slice(0, num).map((song) => <Player song={song} />)
+      ) : (
+        <button onClick={() => window.location.reload()}>
+          No Songs for this Artist: Try again?
+        </button>
+      )}
+    </div>
   )
 }
 
