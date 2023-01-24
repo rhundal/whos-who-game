@@ -1,0 +1,129 @@
+.player-container {
+  width: 40%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--card-bg-color);
+  padding: 2em;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.play,
+.pause {
+  font-size: 2.5rem;
+  color: var(--btn-color);
+  box-shadow: none;
+  transition: 0.2s all;
+  background: none;
+  padding: 0;
+  margin: 0 0 0 10px;
+}
+
+.play:hover,
+.pause:hover {
+  background: none;
+  color: #987cee;
+}
+
+.play:active,
+.pause:active {
+  transform: scale(0.9);
+}
+
+.volume-slider i {
+  font-size: 2rem;
+  color: var(--paragraph-text);
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type='range']:focus {
+  outline: none;
+}
+
+input[type='range']::-ms-track {
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: var(--paragraph-text);
+  cursor: pointer;
+  margin-top: -14px;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 8.4px;
+  cursor: pointer;
+  background: var(--btn-color);
+  border-radius: 1.3px;
+}
+
+input[type='range']:focus::-webkit-slider-runnable-track {
+  background: var(--btn-color);
+}
+
+input[type='range']::-moz-range-track {
+  height: 8.4px;
+  cursor: pointer;
+  background: black;
+  border-radius: 1.3px;
+}
+
+input[type='range']::-ms-track {
+  height: 8.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+
+input[type='range']::-ms-fill-lower {
+  background: transparent;
+  border-radius: 2.6px;
+}
+
+input[type='range']:focus::-ms-fill-lower {
+  background: transparent;
+}
+
+input[type='range']::-ms-fill-upper {
+  background: var(--btn-color);
+  border-radius: 2.6px;
+}
+
+input[type='range']:focus::-ms-fill-upper {
+  background: var(--btn-color);
+}
+
+.volume-slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  margin: 0 10px 10px;
+}
+
+.volume-slider,
+.play,
+.pause {
+  margin-top: 8px;
+}

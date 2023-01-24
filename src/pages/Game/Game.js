@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useHistory } from 'react'
 import fetchFromSpotify, { request } from '../../services/api'
-import ReactAudioPlayer from 'react-audio-player'
 import './Game.css'
+
+import Player from '../../components/Player/Player'
+
 import { Link } from 'react-router-dom'
+
 
 const AUTH_ENDPOINT =
   'https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token'
@@ -80,6 +83,15 @@ const Game = () => {
     return <div>Loading...</div>
   }
 
+  // Check if artist name is the same as artist name in song data
+
+  // function checkGuess() {
+  //   if (artists[random].name === songs[random])
+  // }
+ 
+  console.log(artists[random])
+  console.log(songs[random])
+
   return (
 
     <>
@@ -128,24 +140,20 @@ const Game = () => {
                         <div className='col'>
 
 
-                          {songs.length > 0 ? (
-                            songs
-                              .slice(0, num)
-                              .map((song) => (
-                                <ReactAudioPlayer
-                                  key={song.id}
-                                  src={song.preview_url}
-                                  autoPlay={false}
-                                  controls
-                                />
-                              ))
+                        <div className='buttonContainer'>
+                        {songs.length > 0 ? (
+                          songs
+                            .slice(0, num)
+                            .map((song) => (
+                              <Player song={song} />
+                            ))
                           ) : (
-                            <button onClick={() => window.location.reload()}>
-                              No Songs for this Artist: Try again?
-                            </button>
-                          )}
-                        </div>
+                          <button onClick={() => window.location.reload()}>
+                            No Songs for this Artist: Try again?
+                          </button>
+                        )}
                       </div>
+                    </div>
                     </li>
                   </ul>
                 </div>
@@ -154,8 +162,6 @@ const Game = () => {
           </div>
         </div>
       </div>
-    </>
-
   )
 }
 export default Game
