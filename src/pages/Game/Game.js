@@ -93,9 +93,6 @@ const Game = () => {
   console.log(songs[random])
 
   return (
-
-    <>
-
       <div className='container mainContainer'>
         <div className='row'>
           <div className='col'>
@@ -105,20 +102,15 @@ const Game = () => {
                 <div className='row'>
                   <div className='col xs-6 sm-4'>
                     <p className="lead">Play the song and guess the artist. </p>
-
                   </div>
                   <div className='col xs-6 sm-8'>
                     <button className="btn btn-info btn-style2 mt-2">
                       <Link to="/" style={{ textDecoration: 'none', color: 'white' }}> Home </Link>
                     </button>
-
                   </div>
                 </div>
-
                 <hr className="my-4" />
-
                 <div className='row'>
-
                   {artists.length > imgNum
                     ? artists.slice(0, imgNum).map((artist) => (
 
@@ -133,27 +125,23 @@ const Game = () => {
                   <ul className="list-unstyled">
                     <li className="media">
                       <div className="media-body">
-
-
                         <h5 className="col mt-0 mb-3 ml-4"> Play Tracks </h5>
-
                         <div className='col'>
-
-
-                        <div className='buttonContainer'>
-                        {songs.length > 0 ? (
-                          songs
-                            .slice(0, num)
-                            .map((song) => (
-                              <Player song={song} />
-                            ))
-                          ) : (
-                          <button onClick={() => window.location.reload()}>
-                            No Songs for this Artist: Try again?
-                          </button>
-                        )}
+                          <div className='buttonContainer'>
+                          {songs.length > 0 ? (
+                            songs
+                              .slice(0, num)
+                              .map((song) => (
+                                <Player song={song} />
+                              ))
+                            ) : (
+                            <button onClick={() => window.location.reload()}>
+                              No Songs for this Artist: Try again?
+                            </button>
+                          )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
                     </li>
                   </ul>
                 </div>
@@ -164,4 +152,5 @@ const Game = () => {
       </div>
   )
 }
+
 export default Game
