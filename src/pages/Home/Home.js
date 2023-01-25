@@ -34,7 +34,7 @@ const Home = () => {
   //     setGenre(savedGenre != null ? savedGenre : "");
   //   }
   //   localStorage.setItem("genreKey", JSON.stringify(genre));
-  // }, [genre]);
+  // }, [genre])
 
   useEffect(() => {
     if (song === null) {
