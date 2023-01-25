@@ -1,8 +1,7 @@
-
-import React, { useEffect, useState, useHistory } from 'react'
-import fetchFromSpotify, { request } from '../../services/api'
-import loader from '../../assets/loading.svg'
-import './Game.css'
+import React, { useEffect, useState, useHistory } from "react";
+import fetchFromSpotify, { request } from "../../services/api";
+import loader from "../../assets/loading.svg";
+import "./Game.css";
 
 import Player from "../../components/Player/Player";
 
@@ -81,45 +80,44 @@ const Game = () => {
   };
 
   if (authLoading || configLoading) {
-
     return (
-      <div className='loader'>
+      <div className="loader">
         <img src={loader} />
       </div>
-    )
+    );
   }
 
-  console.log(artists[random])
-  console.log(songs[random])
+  console.log(artists[random]);
+  console.log(songs[random]);
 
   return (
-    <div className='game-container'>
-      <button className='home-btn'>
-        <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
-          {' '}
-          Home{' '}
+    <div className="game-container">
+      <button className="home-btn">
+        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          {" "}
+          Home{" "}
         </Link>
       </button>
       <h3>Play the song and guess the artist.</h3>
-      <hr className='line' />
-      <div className='img-container'>
+      <hr className="line" />
+      <div className="img-container">
         {artists.length > imgNum
           ? artists.slice(0, imgNum).map((artist) => (
-              <div className='image' key={artist.id}>
+              <div className="image" key={artist.id}>
                 <img src={artist.images[0].url} />
                 <p>{artist.name}</p>
               </div>
             ))
-          : 'No Images to display'}
+          : "No Images to display"}
       </div>
       {songs.length > 0 ? (
-        songs.slice(0, num).map((song) => <Player song={song} />)
+        songs.slice(0, num).map((song) => <Player song={song} key={song.id} />)
       ) : (
         <button onClick={() => window.location.reload()}>
           No Songs for this Artist: Try again?
         </button>
       )}
     </div>
-  )
-}
-export default Game
+  );
+};
+export default Game;
