@@ -8,20 +8,28 @@ const TOKEN_KEY = 'whos-who-access-token'
 import './Home.css'
 
 const Home = () => {
-  const [genre, setGenre] = useState({ genre: "pop" });
-  const [artist, setArtist] = useState({ artist: 2 });
-  const [song, setSong] = useState({ song: 1 });
+  const [genre, setGenre] = useState({ genre: 'pop' })
+  const [artist, setArtist] = useState(
+    JSON.parse(localStorage.getItem('artist'))
+  )
+  const [song, setSong] = useState(JSON.parse(localStorage.getItem('song')))
   const [genres, setGenres] = useState([])
   const [selectedGenre, setSelectedGenre] = useState('')
   const [authLoading, setAuthLoading] = useState(false)
   const [configLoading, setConfigLoading] = useState(false)
   const [token, setToken] = useState('')
 
-  const loadGenres = async t => {
+  useEffect(() => {
+    localStorage.setItem('genre', JSON.stringify(genre))
+    localStorage.setItem('artist', JSON.stringify(artist))
+    localStorage.setItem('song', JSON.stringify(song))
+  })
+
+  const loadGenres = async (t) => {
     setConfigLoading(true)
     const response = await fetchFromSpotify({
       token: t,
-      endpoint: 'recommendations/available-genre-seeds'
+      endpoint: 'recommendations/available-genre-seeds',
     })
     console.log(response)
     setGenres(response.genres)
@@ -45,7 +53,7 @@ const Home = () => {
     request(AUTH_ENDPOINT).then(({ access_token, expires_in }) => {
       const newToken = {
         value: access_token,
-        expiration: Date.now() + (expires_in - 20) * 1000
+        expiration: Date.now() + (expires_in - 20) * 1000,
       }
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken))
       setAuthLoading(false)
@@ -59,26 +67,26 @@ const Home = () => {
   }
 
   const handleSubmit = (e) => {
-    localStorage.setItem("genre", JSON.stringify(genre));
-    localStorage.setItem("artist", JSON.stringify(artist));
-    localStorage.setItem("song", JSON.stringify(song));
-  };
+    localStorage.setItem('genre', JSON.stringify(genre))
+    localStorage.setItem('artist', JSON.stringify(artist))
+    localStorage.setItem('song', JSON.stringify(song))
+  }
 
   const handleGenreSelect = (e) => {
     setGenre({ genre: e.target.value })
     setSelectedGenre(e.target.value)
-    console.log("genre: " + e.target.value)
-  };
+    console.log('genre: ' + e.target.value)
+  }
 
   const handleArtistSelect = (e) => {
     setArtist({ artist: parseInt(e.target.value) })
-    console.log("artist: " + e.target.value)
-  };
+    console.log('artist: ' + e.target.value)
+  }
 
   const handleSongSelect = (e) => {
     setSong({ song: parseInt(e.target.value) })
-    console.log("song: " + e.target.value)
-  };
+    console.log('song: ' + e.target.value)
+  }
 
   if (authLoading || configLoading) {
     return (
@@ -103,6 +111,7 @@ const Home = () => {
         <label for='inlineFormCustomSelectPref'> Number of Artists </label>
         <select
           value={artist.artist}
+          defaultValue='2'
           onChange={handleArtistSelect}
           type='number'
           required
@@ -115,7 +124,12 @@ const Home = () => {
           <option value='4'>4</option>
         </select>
         <label for='inlineFormCustomSelectPref'> Number of Songs </label>
-        <select value={song.song} onChange={handleSongSelect} type='number' required>
+        <select
+          value={song.song}
+          onChange={handleSongSelect}
+          type='number'
+          required
+        >
           <option selected disabled>
             Choose
           </option>
