@@ -8,49 +8,25 @@ const TOKEN_KEY = 'whos-who-access-token'
 import './Home.css'
 
 const Home = () => {
-  const [genre, setGenre] = useState(null)
-  const [artist, setArtist] = useState(null)
-  const [song, setSong] = useState(null)
+  const [genre, setGenre] = useState({ genre: "pop" });
+  const [artist, setArtist] = useState({ artist: 2 });
+  const [song, setSong] = useState({ song: 1 });
   const [genres, setGenres] = useState([])
   const [selectedGenre, setSelectedGenre] = useState('')
   const [authLoading, setAuthLoading] = useState(false)
   const [configLoading, setConfigLoading] = useState(false)
   const [token, setToken] = useState('')
 
-  const loadGenres = async (t) => {
+  const loadGenres = async t => {
     setConfigLoading(true)
     const response = await fetchFromSpotify({
       token: t,
-      endpoint: 'recommendations/available-genre-seeds',
+      endpoint: 'recommendations/available-genre-seeds'
     })
     console.log(response)
     setGenres(response.genres)
     setConfigLoading(false)
   }
-
-  // useEffect(() => {
-  //   if (genre === null) {
-  //     const savedGenre = JSON.parse(localStorage.getItem("genreKey"));
-  //     setGenre(savedGenre != null ? savedGenre : "");
-  //   }
-  //   localStorage.setItem("genreKey", JSON.stringify(genre));
-  // }, [genre]);
-
-  useEffect(() => {
-    if (song === null) {
-      const savedSongs = JSON.parse(localStorage.getItem('songsKey'))
-      setSong(savedSongs != null ? savedSongs : 1)
-    }
-    localStorage.setItem('songsKey', JSON.stringify(song))
-  }, [song])
-
-  useEffect(() => {
-    if (artist === null) {
-      const savedArtists = JSON.parse(localStorage.getItem('artistsKey'))
-      setArtist(savedArtists != null ? savedArtists : 2)
-    }
-    localStorage.setItem('artistsKey', JSON.stringify(artist))
-  }, [artist])
 
   useEffect(() => {
     setAuthLoading(true)
@@ -69,7 +45,7 @@ const Home = () => {
     request(AUTH_ENDPOINT).then(({ access_token, expires_in }) => {
       const newToken = {
         value: access_token,
-        expiration: Date.now() + (expires_in - 20) * 1000,
+        expiration: Date.now() + (expires_in - 20) * 1000
       }
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken))
       setAuthLoading(false)
@@ -79,31 +55,37 @@ const Home = () => {
   }, [])
 
   if (authLoading || configLoading) {
+    return <div>Loading...</div>
+  }
+
+  const handleSubmit = (e) => {
+    localStorage.setItem("genre", JSON.stringify(genre));
+    localStorage.setItem("artist", JSON.stringify(artist));
+    localStorage.setItem("song", JSON.stringify(song));
+  };
+
+  const handleGenreSelect = (e) => {
+    setGenre({ genre: e.target.value })
+    setSelectedGenre(e.target.value)
+    console.log("genre: " + e.target.value)
+  };
+
+  const handleArtistSelect = (e) => {
+    setArtist({ artist: parseInt(e.target.value) })
+    console.log("artist: " + e.target.value)
+  };
+
+  const handleSongSelect = (e) => {
+    setSong({ song: parseInt(e.target.value) })
+    console.log("song: " + e.target.value)
+  };
+  
+  if (authLoading || configLoading) {
     return (
       <div className='loader'>
         <img src={loader} />
       </div>
     )
-  }
-
-  const handleGenreSelect = (e) => {
-    setGenre({ genre: e.target.value })
-    setSelectedGenre(e.target.value)
-    console.log('genre: ' + e.target.value)
-  }
-
-  const handleArtistSelect = (e) => {
-    setArtist(e.target.value)
-    console.log('artist: ' + e.target.value)
-  }
-
-  const handleSongSelect = (e) => {
-    setSong(e.target.value)
-    console.log('song: ' + e.target.value)
-  }
-
-  const handleSubmit = (e) => {
-    localStorage.setItem('genre', JSON.stringify(genre))
   }
 
   return (
