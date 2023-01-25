@@ -9,13 +9,21 @@ import "./Home.css";
 
 const Home = () => {
   const [genre, setGenre] = useState({ genre: "pop" });
-  const [artist, setArtist] = useState({ artist: 2 });
-  const [song, setSong] = useState({ song: 1 });
+  const [artist, setArtist] = useState(
+    JSON.parse(localStorage.getItem("artist"))
+  );
+  const [song, setSong] = useState(JSON.parse(localStorage.getItem("song")));
   const [genres, setGenres] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
   const [configLoading, setConfigLoading] = useState(false);
   const [token, setToken] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("genre", JSON.stringify(genre));
+    localStorage.setItem("artist", JSON.stringify(artist));
+    localStorage.setItem("song", JSON.stringify(song));
+  });
 
   const loadGenres = async (t) => {
     setConfigLoading(true);
@@ -103,6 +111,7 @@ const Home = () => {
         <label htmlFor="inlineFormCustomSelectPref"> Number of Artists </label>
         <select
           value={artist.artist}
+          defaultValue="2"
           onChange={handleArtistSelect}
           type="number"
           required
@@ -116,6 +125,7 @@ const Home = () => {
         </select>
         <label htmlFor="inlineFormCustomSelectPref"> Number of Songs </label>
         <select
+          defaultValue="1"
           value={song.song}
           onChange={handleSongSelect}
           type="number"
