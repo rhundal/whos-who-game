@@ -23,6 +23,7 @@ const Game = () => {
   const [songNum] = useState(JSON.parse(localStorage.getItem("song")));
   const num = songNum.song;
   const imgNum = artistNum.artist;
+  const [winningArtist, setWinningArtist] = useState([]);
 
   // newly added - win lose logic
   const [winStatus, setWinStatus] = useState(false)
@@ -84,6 +85,7 @@ const Game = () => {
     });
 
     let data2 = await response2.tracks;
+    setWinningArtist(data);
 
     setSongs(data2.filter((song) => song.preview_url != null));
     setConfigLoading(false);
@@ -158,12 +160,8 @@ const Game = () => {
                     console.log("===> " + isChecked)
                     console.log("===> " + artist.name)
                     // this.onChangeValue
-                    if (isChecked.id === song.id) { // this line
 
-                      setWinStatus(true);
-                    }
-
-                    if (winStatus) {
+                    if (winningArtist === artist.id) {
                       console.log("you won");
 
                     }
@@ -172,6 +170,7 @@ const Game = () => {
                     }
                   }
                   } />
+
                 </div>
               ))
               : "No Images to display"
