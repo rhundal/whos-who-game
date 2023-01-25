@@ -1,5 +1,5 @@
 .player-container {
-  width: 40%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -15,7 +15,6 @@
   font-size: 2.5rem;
   color: var(--btn-color);
   box-shadow: none;
-  transition: 0.2s all;
   background: none;
   padding: 0;
   margin: 0 0 0 10px;
