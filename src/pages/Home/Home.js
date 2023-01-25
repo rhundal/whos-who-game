@@ -1,47 +1,72 @@
-import React, { useEffect, useState } from 'react'
-import fetchFromSpotify, { request } from '../../services/api'
+
+import React, { useEffect, useState } from "react";
+import fetchFromSpotify, { request } from "../../services/api";
 import loader from '../../assets/loading.svg'
 
 const AUTH_ENDPOINT =
-  'https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token'
-const TOKEN_KEY = 'whos-who-access-token'
-import './Home.css'
+  "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
+const TOKEN_KEY = "whos-who-access-token";
+import "./Home.css";
 
 const Home = () => {
-  const [genre, setGenre] = useState({ genre: 'pop' })
-  const [artist, setArtist] = useState({ artist: 2 })
-  const [song, setSong] = useState({ song: 1 })
-  const [genres, setGenres] = useState([])
-  const [selectedGenre, setSelectedGenre] = useState('')
-  const [authLoading, setAuthLoading] = useState(false)
-  const [configLoading, setConfigLoading] = useState(false)
-  const [token, setToken] = useState('')
+  const [genre, setGenre] = useState(null);
+  const [artist, setArtist] = useState(null);
+  const [song, setSong] = useState(null);
+  const [genres, setGenres] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [authLoading, setAuthLoading] = useState(false);
+  const [configLoading, setConfigLoading] = useState(false);
+  const [token, setToken] = useState("");
 
   const loadGenres = async (t) => {
-    setConfigLoading(true)
+    setConfigLoading(true);
     const response = await fetchFromSpotify({
       token: t,
-      endpoint: 'recommendations/available-genre-seeds',
-    })
-    console.log(response)
-    setGenres(response.genres)
-    setConfigLoading(false)
-  }
+      endpoint: "recommendations/available-genre-seeds",
+    });
+    console.log(response);
+    setGenres(response.genres);
+    setConfigLoading(false);
+  };
 
   useEffect(() => {
-    setAuthLoading(true)
-    const storedTokenString = localStorage.getItem(TOKEN_KEY)
+    if (genre === null) {
+      const savedGenre = JSON.parse(localStorage.getItem("genreKey"));
+      setGenre(savedGenre != null ? savedGenre : "");
+    }
+    localStorage.setItem("genreKey", JSON.stringify(genre));
+  }, [genre]);
+
+  useEffect(() => {
+    if (song === null) {
+      const savedSongs = JSON.parse(localStorage.getItem("songsKey"));
+      setSong(savedSongs != null ? savedSongs : 1);
+    }
+    localStorage.setItem("songsKey", JSON.stringify(song));
+  }, [song]);
+
+  useEffect(() => {
+    if (artist === null) {
+      const savedArtists = JSON.parse(localStorage.getItem("artistsKey"));
+      setArtist(savedArtists != null ? savedArtists : 2);
+    }
+    localStorage.setItem("artistsKey", JSON.stringify(artist));
+  }, [artist]);
+
+  useEffect(() => {
+    setAuthLoading(true);
+    const storedTokenString = localStorage.getItem(TOKEN_KEY);
     if (storedTokenString) {
-      const storedToken = JSON.parse(storedTokenString)
+      const storedToken = JSON.parse(storedTokenString);
       if (storedToken.expiration > Date.now()) {
-        console.log('Token found in localstorage')
-        setAuthLoading(false)
-        setToken(storedToken.value)
-        loadGenres(storedToken.value)
-        return
+        console.log("Token found in localstorage");
+        setAuthLoading(false);
+        setToken(storedToken.value);
+        loadGenres(storedToken.value);
+        return;
       }
     }
-    console.log('Sending request to AWS endpoint')
+    console.log("Sending request to AWS endpoint");
     request(AUTH_ENDPOINT).then(({ access_token, expires_in }) => {
       const newToken = {
         value: access_token,
