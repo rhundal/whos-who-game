@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useHistory } from 'react'
 import fetchFromSpotify, { request } from '../../services/api'
+import ReactAudioPlayer from 'react-audio-player'
 import './Game.css'
-
-import Player from '../../components/Player/Player'
-
 import { Link } from 'react-router-dom'
-
 
 const AUTH_ENDPOINT =
   'https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token'
@@ -87,15 +84,6 @@ const Game = () => {
     return <div>Loading...</div>
   }
 
-  // Check if artist name is the same as artist name in song data
-
-  // function checkGuess() {
-  //   if (artists[random].name === songs[random])
-  // }
-
-  console.log(artists[random])
-  console.log(songs[random])
-
   // //feed answers
 
   // lose win logic
@@ -109,14 +97,12 @@ const Game = () => {
   //     setWinStatus(true);
   //   }
 
-
   // }, [])
 
 
   return (
 
     <>
-
       <div className='container mainContainer'>
         <div className='row'>
           <div className='col'>
@@ -126,15 +112,20 @@ const Game = () => {
                 <div className='row'>
                   <div className='col xs-6 sm-4'>
                     <p className="lead">Play the song and guess the artist. </p>
+
                   </div>
                   <div className='col xs-6 sm-8'>
                     <button className="btn btn-info btn-style2 mt-2">
                       <Link to="/" style={{ textDecoration: 'none', color: 'white' }}> Home </Link>
                     </button>
+
                   </div>
                 </div>
+
                 <hr className="my-4" />
+
                 <div className='row'>
+
                   {artists.length > imgNum
                     ? artists.slice(0, imgNum).map((artist) => (
                       <>
@@ -148,17 +139,19 @@ const Game = () => {
                     : 'No Images to display'}
                 </div>
 
-                <div className='row'>
+                {/* <div className='row'>
 
                   {songs.map((song) => {
 
                     <div className="form-check" key={song.id}>
-                      <input type="radio" name={i} value={answer} onClick={() => checkAnswer(answer)} aria-label="Option 1" />
+                      <input type="radio" value={1} />
                     </div>
                   })}
-                  <button type="submit" className="btn btn-primary mt-3">Submit Answer</button>
+                <button type="submit" className="btn btn-primary mt-3">Submit Answer</button>
 
-                </div>
+              </div> */}
+                {/* name={i}   value={answer} onClick={() => checkAnswer(answer)} aria-label="Option 1" */}
+
 
               </div>
               <div className='row mt-4'>
@@ -198,8 +191,6 @@ const Game = () => {
         </div>
       </div >
     </>
-
   )
 }
-
 export default Game
