@@ -28,13 +28,13 @@ const Home = () => {
     setConfigLoading(false)
   }
 
-  useEffect(() => {
-    if (genre === null) {
-      const savedGenre = JSON.parse(localStorage.getItem('genreKey'))
-      setGenre(savedGenre != null ? savedGenre : '')
-    }
-    localStorage.setItem('genreKey', JSON.stringify(genre))
-  }, [genre])
+  // useEffect(() => {
+  //   if (genre === null) {
+  //     const savedGenre = JSON.parse(localStorage.getItem("genreKey"));
+  //     setGenre(savedGenre != null ? savedGenre : "");
+  //   }
+  //   localStorage.setItem("genreKey", JSON.stringify(genre));
+  // }, [genre]);
 
   useEffect(() => {
     if (song === null) {
@@ -86,12 +86,6 @@ const Home = () => {
     )
   }
 
-  const handleSubmit = (e) => {
-    localStorage.setItem('genre', JSON.stringify(genre))
-    localStorage.setItem('artist', JSON.stringify(artist))
-    localStorage.setItem('song', JSON.stringify(song))
-  }
-
   const handleGenreSelect = (e) => {
     setGenre({ genre: e.target.value })
     setSelectedGenre(e.target.value)
@@ -99,13 +93,17 @@ const Home = () => {
   }
 
   const handleArtistSelect = (e) => {
-    setArtist({ artist: parseInt(e.target.value) })
+    setArtist(e.target.value)
     console.log('artist: ' + e.target.value)
   }
 
   const handleSongSelect = (e) => {
-    setSong({ song: parseInt(e.target.value) })
+    setSong(e.target.value)
     console.log('song: ' + e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    localStorage.setItem('genre', JSON.stringify(genre))
   }
 
   return (
@@ -122,7 +120,7 @@ const Home = () => {
         </select>
         <label for='inlineFormCustomSelectPref'> Number of Artists </label>
         <select
-          defaultValue='2'
+          value={artist}
           onChange={handleArtistSelect}
           type='number'
           required
@@ -135,12 +133,7 @@ const Home = () => {
           <option value='4'>4</option>
         </select>
         <label for='inlineFormCustomSelectPref'> Number of Songs </label>
-        <select
-          defaultValue='1'
-          onChange={handleSongSelect}
-          type='number'
-          required
-        >
+        <select value={song} onChange={handleSongSelect} type='number' required>
           <option selected disabled>
             Choose
           </option>
