@@ -106,10 +106,6 @@ const Home = () => {
     localStorage.setItem('genre', JSON.stringify(genre))
   }
 
-  const handleSubmit = (e) => {
-    localStorage.setItem("genre", JSON.stringify(genre));
-  };
-
   return (
     <div className="home-container">
       <form action="/game" onSubmit={handleSubmit}>
