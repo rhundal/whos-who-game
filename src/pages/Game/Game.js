@@ -97,9 +97,9 @@ const Game = () => {
         <img src={loader} />
       </div>
     );
-  
+
   }
-  
+
 
   return (
     <div className="game-container">
@@ -127,6 +127,9 @@ const Game = () => {
               ? artists.slice(0, imgNum).map((artist) => (
                 <div className="radioStyles" key={artist.name}>
                   <input type="radio" key={artist.name} id={artist.name} checked={isChecked === artist.name} name={artist.name} value={artist.name} onChange={() => {
+
+                    setChecked(artist.name);
+
                     if (winningArtist === artist.id) {
                       console.log("you won");
                     }
@@ -135,7 +138,7 @@ const Game = () => {
                     }
                   }
                   } />
-                  <label for ={artist.name}>{artist.name}</label>
+                  <label for={artist.name}>{artist.name}</label>
                 </div>
               ))
               : "No Images to display"
