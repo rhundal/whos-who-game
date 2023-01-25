@@ -28,13 +28,13 @@ const Home = () => {
     setConfigLoading(false);
   };
 
-  useEffect(() => {
-    if (genre === null) {
-      const savedGenre = JSON.parse(localStorage.getItem("genreKey"));
-      setGenre(savedGenre != null ? savedGenre : "");
-    }
-    localStorage.setItem("genreKey", JSON.stringify(genre));
-  }, [genre]);
+  // useEffect(() => {
+  //   if (genre === null) {
+  //     const savedGenre = JSON.parse(localStorage.getItem("genreKey"));
+  //     setGenre(savedGenre != null ? savedGenre : "");
+  //   }
+  //   localStorage.setItem("genreKey", JSON.stringify(genre));
+  // }, [genre]);
 
   useEffect(() => {
     if (song === null) {
@@ -102,9 +102,13 @@ const Home = () => {
     console.log("song: " + e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    localStorage.setItem("genre", JSON.stringify(genre));
+  };
+
   return (
     <div className="home-container">
-      <form action="/game">
+      <form action="/game" onSubmit={handleSubmit}>
         <label for="inlineFormCustomSelectPref"> Genre </label>
         <select value={selectedGenre} onChange={handleGenreSelect}>
           <option value="" />
