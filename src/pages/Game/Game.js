@@ -109,12 +109,20 @@ const Game = () => {
       <div className='img-container'>
         {artists.length > imgNum
           ? artists.slice(0, imgNum).map((artist) => (
+<<<<<<< Updated upstream
             <div className='image' key={artist.id}>
+=======
+            <div className="image" key={artist.id}>
+>>>>>>> Stashed changes
               <img src={artist.images[0].url} />
               <p>{artist.name}</p>
             </div>
           ))
+<<<<<<< Updated upstream
           : 'No Images to display'}
+=======
+          : "No Images to display"}
+>>>>>>> Stashed changes
       </div>
       {songs.length > 0 ? (
         songs.slice(0, num).map((song) => <Player song={song} />)
@@ -124,6 +132,12 @@ const Game = () => {
         </button>
       )}
     </div>
+<<<<<<< Updated upstream
   )
 }
 export default Game
+=======
+  );
+};
+export default Game;
+>>>>>>> Stashed changes
