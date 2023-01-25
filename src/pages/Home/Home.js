@@ -106,10 +106,14 @@ const Home = () => {
     localStorage.setItem('genre', JSON.stringify(genre))
   }
 
+  const handleSubmit = (e) => {
+    localStorage.setItem("genre", JSON.stringify(genre));
+  };
+
   return (
-    <div className='home-container'>
-      <form action='/game' onSubmit={handleSubmit}>
-        <label for='inlineFormCustomSelectPref'> Genre </label>
+    <div className="home-container">
+      <form action="/game" onSubmit={handleSubmit}>
+        <label for="inlineFormCustomSelectPref"> Genre </label>
         <select value={selectedGenre} onChange={handleGenreSelect}>
           <option value='' />
           {genres.map((genre) => (
