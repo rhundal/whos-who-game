@@ -39,10 +39,10 @@
 
 @media screen and (max-width: 800px) {
     select {
-      width: 100%;
+        width: 100%;
     }
 
     .image p {
         font-size: 0.7rem;
     }
-  }
+}
