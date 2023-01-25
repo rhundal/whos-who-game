@@ -96,7 +96,7 @@ const Game = () => {
       <div className="loader">
         <img src={loader} />
       </div>
-  
+    );
   
   }
   
