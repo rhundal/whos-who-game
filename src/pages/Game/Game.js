@@ -96,35 +96,10 @@ const Game = () => {
       <div className="loader">
         <img src={loader} />
       </div>
-    );
+  
+  
   }
-
-  console.log(artists[random]);
-  console.log(songs[random]);
-
-  // if (numTries > 0 && answer !== "correct") {
-
-  //   setLoseStatus(true);
-  // }
-
-  const onChangeValue = (e) => {
-
-    // this.setAnswer(e.target.value);
-
-    // console.log("answer " + answer);
-    // // setValue(a)
-    // // valueRadio
-
-    // if (document.getElementById(e.target.value).checked == true) {
-
-    //   console.log(selected + answer);
-    // }
-
-    let val = e.target.value;
-
-  }
-
-
+  
 
   return (
     <div className="game-container">
@@ -152,29 +127,18 @@ const Game = () => {
               ? artists.slice(0, imgNum).map((artist) => (
                 <div className="radioStyles" key={artist.name}>
                   <input type="radio" key={artist.name} id={artist.name} checked={isChecked === artist.name} name={artist.name} value={artist.name} onChange={() => {
-                    // this.setState({ answer: artist.name });
-                    //setAnswer(imgNum);
-
-                    setChecked(artist.name);
-                    console.log("--- > " + imgNum)
-                    console.log("===> " + isChecked)
-                    console.log("===> " + artist.name)
-                    // this.onChangeValue
-
                     if (winningArtist === artist.id) {
                       console.log("you won");
-
                     }
                     else {
                       console.log("you lost");
                     }
                   }
                   } />
-
+                  <label for ={artist.name}>{artist.name}</label>
                 </div>
               ))
               : "No Images to display"
-
           }
 
           {songs.length > 0 ? (
@@ -186,15 +150,6 @@ const Game = () => {
           )}
         </div>
       </div>
-
-      {/* 
-
-          valueRadio.map(function (val, indx) {
-
-            
-
-          })
-        } */}
     </div>
   );
 };
