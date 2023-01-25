@@ -79,7 +79,7 @@ const Home = () => {
     setSong({ song: parseInt(e.target.value) })
     console.log("song: " + e.target.value)
   };
-  
+
   if (authLoading || configLoading) {
     return (
       <div className='loader'>
@@ -102,7 +102,7 @@ const Home = () => {
         </select>
         <label for='inlineFormCustomSelectPref'> Number of Artists </label>
         <select
-          value={artist}
+          value={artist.artist}
           onChange={handleArtistSelect}
           type='number'
           required
@@ -115,7 +115,7 @@ const Home = () => {
           <option value='4'>4</option>
         </select>
         <label for='inlineFormCustomSelectPref'> Number of Songs </label>
-        <select value={song} onChange={handleSongSelect} type='number' required>
+        <select value={song.song} onChange={handleSongSelect} type='number' required>
           <option selected disabled>
             Choose
           </option>
