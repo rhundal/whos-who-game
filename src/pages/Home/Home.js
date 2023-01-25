@@ -34,7 +34,7 @@ const Home = () => {
   //     setGenre(savedGenre != null ? savedGenre : "");
   //   }
   //   localStorage.setItem("genreKey", JSON.stringify(genre));
-  // }, [genre])
+  // }, [genre]);
 
   useEffect(() => {
     if (song === null) {
@@ -109,32 +109,42 @@ const Home = () => {
   return (
     <div className="home-container">
       <form action="/game" onSubmit={handleSubmit}>
-        <label for="inlineFormCustomSelectPref"> Genre </label>
-        <select value={selectedGenre} onChange={handleGenreSelect}>
-          <option value="" />
+        <label htmlFor="inlineFormCustomSelectPref"> Genre </label>
+        <select
+          value={selectedGenre ? selectedGenre : ""}
+          onChange={handleGenreSelect}
+        >
+          <option disabled value="Choose">
+            Choose
+          </option>
           {genres.map((genre) => (
             <option key={genre} value={genre}>
               {genre}
             </option>
           ))}
         </select>
-        <label for="inlineFormCustomSelectPref"> Number of Artists </label>
+        <label htmlFor="inlineFormCustomSelectPref"> Number of Artists </label>
         <select
-          value={artist}
+          value={artist ? artist : ""}
           onChange={handleArtistSelect}
           type="number"
           required
         >
-          <option selected disabled>
+          <option disabled value="Choose">
             Choose
           </option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
         </select>
-        <label for="inlineFormCustomSelectPref"> Number of Songs </label>
-        <select value={song} onChange={handleSongSelect} type="number" required>
-          <option selected disabled>
+        <label htmlFor="inlineFormCustomSelectPref"> Number of Songs </label>
+        <select
+          value={song ? song : ""}
+          onChange={handleSongSelect}
+          type="number"
+          required
+        >
+          <option disabled value="Choose">
             Choose
           </option>
           <option value="1">1</option>
