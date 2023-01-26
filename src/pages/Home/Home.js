@@ -8,11 +8,15 @@ const TOKEN_KEY = "whos-who-access-token";
 import "./Home.css";
 
 const Home = () => {
-  const [genre, setGenre] = useState(JSON.parse(localStorage.getItem("genre")));
-  const [artist, setArtist] = useState(
-    JSON.parse(localStorage.getItem("artist"))
+  const [genre, setGenre] = useState(
+    JSON.parse(localStorage.getItem("genre")) || { genre: "edm" }
   );
-  const [song, setSong] = useState(JSON.parse(localStorage.getItem("song")));
+  const [artist, setArtist] = useState(
+    JSON.parse(localStorage.getItem("artist")) || { artist: "2" }
+  );
+  const [song, setSong] = useState(
+    JSON.parse(localStorage.getItem("song")) || { song: "1" }
+  );
   const [genres, setGenres] = useState([]);
   // const [selectedGenre, setSelectedGenre] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
@@ -67,10 +71,10 @@ const Home = () => {
   }
 
   const handleSubmit = (e) => {
-    localStorage.setItem('genre', JSON.stringify(genre))
-    localStorage.setItem('artist', JSON.stringify(artist))
-    localStorage.setItem('song', JSON.stringify(song))
-  }
+    localStorage.setItem("genre", JSON.stringify(genre));
+    localStorage.setItem("artist", JSON.stringify(artist));
+    localStorage.setItem("song", JSON.stringify(song));
+  };
 
   const handleGenreSelect = (e) => {
     setGenre({ genre: e.target.value });
