@@ -26,11 +26,11 @@ const Game = () => {
   const [winningArtist, setWinningArtist] = useState([]);
 
   // newly added - win lose logic
-  const [winStatus, setWinStatus] = useState(false)
-  const [numTries, setNumTries] = useState(0)
-  const [answer, setAnswer] = useState('')
+  const [winStatus, setWinStatus] = useState(false);
+  const [numTries, setNumTries] = useState(0);
+  const [answer, setAnswer] = useState("");
   // const [loseStatus, setLoseStatus] = useState(false)
-  const [valueRadio, setValue] = useState([1, 2, 3, 4])
+  const [valueRadio, setValue] = useState([1, 2, 3, 4]);
   const [correct, setCorrect] = useState(null);
   let [isChecked, setChecked] = useState(null);
 
@@ -99,7 +99,6 @@ const Game = () => {
     );
   
   }
-  
 
   return (
     <div className="game-container">
@@ -120,29 +119,34 @@ const Game = () => {
             </div>
           ))
           : "No Images to display"}
-
-        <div className='radioStyles'>
-          {
-            artists.length > imgNum
-              ? artists.slice(0, imgNum).map((artist) => (
+        <div className="radioStyles">
+          {artists.length > imgNum
+            ? artists.slice(0, imgNum).map((artist) => (
                 <div className="radioStyles" key={artist.name}>
-                  <input type="radio" key={artist.name} id={artist.name} checked={isChecked === artist.name} name={artist.name} value={artist.name} onChange={() => {
-                    if (winningArtist === artist.id) {
-                      console.log("you won");
-                    }
-                    else {
-                      console.log("you lost");
-                    }
-                  }
-                  } />
-                  <label for ={artist.name}>{artist.name}</label>
+                  <input
+                    type="radio"
+                    key={artist.name}
+                    id={artist.name}
+                    checked={isChecked === artist.name}
+                    name={artist.name}
+                    value={artist.name}
+                    onChange={() => {
+                      if (winningArtist === artist.id) {
+                        console.log("you won");
+                      } else {
+                        console.log("you lost");
+                      }
+                    }}
+                  />
+                  <label htmlFor={artist.name}>{artist.name}</label>
                 </div>
               ))
-              : "No Images to display"
-          }
+            : "No Images to display"}
 
           {songs.length > 0 ? (
-            songs.slice(0, num).map((song) => <Player song={song} key={song.id} />)
+            songs
+              .slice(0, num)
+              .map((song) => <Player song={song} key={song.id} />)
           ) : (
             <button onClick={() => window.location.reload()}>
               No Songs for this Artist: Try again?
