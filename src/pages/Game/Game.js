@@ -120,38 +120,41 @@ const Game = () => {
             </div>
           ))
           : "No Images to display"}
+      </div>
+      {/* radio buttons */}
+      <div className='radioStyles'>
+        {
+          artists.length > imgNum
+            ? artists.slice(0, imgNum).map((artist) => (
+              <div className="radioStyles" key={artist.name}>
+                <input type="radio" key={artist.name} id={artist.name} checked={isChecked === artist.name} name={artist.name} value={artist.name} onChange={() => {
 
-        <div className='radioStyles'>
-          {
-            artists.length > imgNum
-              ? artists.slice(0, imgNum).map((artist) => (
-                <div className="radioStyles" key={artist.name}>
-                  <input type="radio" key={artist.name} id={artist.name} checked={isChecked === artist.name} name={artist.name} value={artist.name} onChange={() => {
+                  setChecked(artist.name);
 
-                    setChecked(artist.name);
-
-                    if (winningArtist === artist.id) {
-                      console.log("you won");
-                    }
-                    else {
-                      console.log("you lost");
-                    }
+                  if (winningArtist === artist.id) {
+                    console.log("you won");
                   }
-                  } />
-                  <label for={artist.name}>{artist.name}</label>
-                </div>
-              ))
-              : "No Images to display"
-          }
-
-          {songs.length > 0 ? (
-            songs.slice(0, num).map((song) => <Player song={song} key={song.id} />)
-          ) : (
-            <button onClick={() => window.location.reload()}>
-              No Songs for this Artist: Try again?
-            </button>
-          )}
-        </div>
+                  else {
+                    console.log("you lost");
+                  }
+                }
+                } />
+                <label for={artist.name}></label>
+              </div>
+              // {artist.name}
+            ))
+            : "No selections to display"
+        }
+      </div>
+      <div className="songStyles">
+        {/* media players */}
+        {songs.length > 0 ? (
+          songs.slice(0, num).map((song) => <Player song={song} key={song.id} />)
+        ) : (
+          <button onClick={() => window.location.reload()}>
+            No Songs for this Artist: Try again?
+          </button>
+        )}
       </div>
     </div>
   );
