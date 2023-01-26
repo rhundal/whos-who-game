@@ -26,11 +26,11 @@ const Game = () => {
   const [winningArtist, setWinningArtist] = useState([]);
 
   // newly added - win lose logic
-  const [winStatus, setWinStatus] = useState(false)
-  const [numTries, setNumTries] = useState(0)
-  const [answer, setAnswer] = useState('')
+  const [winStatus, setWinStatus] = useState(false);
+  const [numTries, setNumTries] = useState(0);
+  const [answer, setAnswer] = useState("");
   // const [loseStatus, setLoseStatus] = useState(false)
-  const [valueRadio, setValue] = useState([1, 2, 3, 4])
+  const [valueRadio, setValue] = useState([1, 2, 3, 4]);
   const [correct, setCorrect] = useState(null);
   let [isChecked, setChecked] = useState(null);
 
