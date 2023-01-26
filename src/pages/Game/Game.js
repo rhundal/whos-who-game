@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
+
 const TOKEN_KEY = "whos-who-access-token";
 
 const Game = () => {
@@ -17,11 +18,21 @@ const Game = () => {
   const [token, setToken] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
   const [configLoading, setConfigLoading] = useState(false);
-  const [genre] = useState(JSON.parse(localStorage.getItem("genre")));
+  const [genre] = useState(JSON.parse(localStorage.getItem("genre"))); // these
   const [artistNum] = useState(JSON.parse(localStorage.getItem("artist")));
   const [songNum] = useState(JSON.parse(localStorage.getItem("song")));
   const num = songNum.song;
   const imgNum = artistNum.artist;
+  const [winningArtist, setWinningArtist] = useState([]);
+
+  // newly added - win lose logic
+  const [winStatus, setWinStatus] = useState(false)
+  const [numTries, setNumTries] = useState(0)
+  const [answer, setAnswer] = useState('')
+  // const [loseStatus, setLoseStatus] = useState(false)
+  const [valueRadio, setValue] = useState([1, 2, 3, 4])
+  const [correct, setCorrect] = useState(null);
+  let [isChecked, setChecked] = useState(null);
 
   useEffect(() => {
     setAuthLoading(true);
@@ -74,6 +85,7 @@ const Game = () => {
     });
 
     let data2 = await response2.tracks;
+    setWinningArtist(data);
 
     setSongs(data2.filter((song) => song.preview_url != null));
     setConfigLoading(false);
@@ -85,10 +97,9 @@ const Game = () => {
         <img src={loader} />
       </div>
     );
+  
   }
-
-  console.log(artists[random]);
-  console.log(songs[random]);
+  
 
   return (
     <div className="game-container">
@@ -103,20 +114,42 @@ const Game = () => {
       <div className="img-container">
         {artists.length > imgNum
           ? artists.slice(0, imgNum).map((artist) => (
-              <div className="image" key={artist.id}>
-                <img src={artist.images[0].url} />
-                <p>{artist.name}</p>
-              </div>
-            ))
+            <div className="image" key={artist.id}>
+              <img src={artist.images[0].url} />
+              <p>{artist.name}</p>
+            </div>
+          ))
           : "No Images to display"}
+
+        <div className='radioStyles'>
+          {
+            artists.length > imgNum
+              ? artists.slice(0, imgNum).map((artist) => (
+                <div className="radioStyles" key={artist.name}>
+                  <input type="radio" key={artist.name} id={artist.name} checked={isChecked === artist.name} name={artist.name} value={artist.name} onChange={() => {
+                    if (winningArtist === artist.id) {
+                      console.log("you won");
+                    }
+                    else {
+                      console.log("you lost");
+                    }
+                  }
+                  } />
+                  <label for ={artist.name}>{artist.name}</label>
+                </div>
+              ))
+              : "No Images to display"
+          }
+
+          {songs.length > 0 ? (
+            songs.slice(0, num).map((song) => <Player song={song} key={song.id} />)
+          ) : (
+            <button onClick={() => window.location.reload()}>
+              No Songs for this Artist: Try again?
+            </button>
+          )}
+        </div>
       </div>
-      {songs.length > 0 ? (
-        songs.slice(0, num).map((song) => <Player song={song} key={song.id} />)
-      ) : (
-        <button onClick={() => window.location.reload()}>
-          No Songs for this Artist: Try again?
-        </button>
-      )}
     </div>
   );
 };

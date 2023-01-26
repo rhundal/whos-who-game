@@ -9,10 +9,8 @@ import './Home.css'
 
 const Home = () => {
   const [genre, setGenre] = useState({ genre: 'pop' })
-  const [artist, setArtist] = useState(
-    JSON.parse(localStorage.getItem('artist'))
-  )
-  const [song, setSong] = useState(JSON.parse(localStorage.getItem('song')))
+  const [artist, setArtist] = useState({ artist: 2 })
+  const [song, setSong] = useState({ song: 1 })
   const [genres, setGenres] = useState([])
   const [selectedGenre, setSelectedGenre] = useState('')
   const [authLoading, setAuthLoading] = useState(false)
@@ -23,7 +21,7 @@ const Home = () => {
     localStorage.setItem('genre', JSON.stringify(genre))
     localStorage.setItem('artist', JSON.stringify(artist))
     localStorage.setItem('song', JSON.stringify(song))
-  })
+  }, [])
 
   const loadGenres = async (t) => {
     setConfigLoading(true)
@@ -62,10 +60,6 @@ const Home = () => {
     })
   }, [])
 
-  if (authLoading || configLoading) {
-    return <div>Loading...</div>
-  }
-
   const handleSubmit = (e) => {
     localStorage.setItem('genre', JSON.stringify(genre))
     localStorage.setItem('artist', JSON.stringify(artist))
@@ -99,7 +93,7 @@ const Home = () => {
   return (
     <div className='home-container'>
       <form action='/game' onSubmit={handleSubmit}>
-        <label for='inlineFormCustomSelectPref'> Genre </label>
+        <label htmlFor='inlineFormCustomSelectPref'> Genre </label>
         <select value={selectedGenre} onChange={handleGenreSelect}>
           <option value='' />
           {genres.map((genre) => (
@@ -108,7 +102,7 @@ const Home = () => {
             </option>
           ))}
         </select>
-        <label for='inlineFormCustomSelectPref'> Number of Artists </label>
+        <label htmlFor='inlineFormCustomSelectPref'> Number of Artists </label>
         <select
           value={artist.artist}
           defaultValue='2'
@@ -116,21 +110,22 @@ const Home = () => {
           type='number'
           required
         >
-          <option selected disabled>
+          <option disabled value='Choose'>
             Choose
           </option>
           <option value='2'>2</option>
           <option value='3'>3</option>
           <option value='4'>4</option>
         </select>
-        <label for='inlineFormCustomSelectPref'> Number of Songs </label>
+        <label htmlFor='inlineFormCustomSelectPref'> Number of Songs </label>
         <select
+          defaultValue='1'
           value={song.song}
           onChange={handleSongSelect}
           type='number'
           required
         >
-          <option selected disabled>
+          <option disabled value='Choose'>
             Choose
           </option>
           <option value='1'>1</option>
