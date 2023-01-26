@@ -100,7 +100,6 @@ const Game = () => {
 
   }
 
-
   return (
     <div className="game-container">
       <button className="home-btn">
