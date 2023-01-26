@@ -67,10 +67,10 @@ const Home = () => {
   }
 
   const handleSubmit = (e) => {
-    localStorage.setItem("genre", JSON.stringify(genre));
-    localStorage.setItem("artist", JSON.stringify(artist));
-    localStorage.setItem("song", JSON.stringify(song));
-  };
+    localStorage.setItem('genre', JSON.stringify(genre))
+    localStorage.setItem('artist', JSON.stringify(artist))
+    localStorage.setItem('song', JSON.stringify(song))
+  }
 
   const handleGenreSelect = (e) => {
     setGenre({ genre: e.target.value });

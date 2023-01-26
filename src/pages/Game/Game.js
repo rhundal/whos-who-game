@@ -97,6 +97,7 @@ const Game = () => {
         <img src={loader} />
       </div>
     );
+  
   }
 
   return (
@@ -112,13 +113,12 @@ const Game = () => {
       <div className="img-container">
         {artists.length > imgNum
           ? artists.slice(0, imgNum).map((artist) => (
-              <div className="image" key={artist.id}>
-                <img src={artist.images[0].url} />
-                <p>{artist.name}</p>
-              </div>
-            ))
+            <div className="image" key={artist.id}>
+              <img src={artist.images[0].url} />
+              <p>{artist.name}</p>
+            </div>
+          ))
           : "No Images to display"}
-
         <div className="radioStyles">
           {artists.length > imgNum
             ? artists.slice(0, imgNum).map((artist) => (
