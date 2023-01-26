@@ -100,7 +100,10 @@ const Home = () => {
     <div className="home-container">
       <form action="/game" onSubmit={handleSubmit}>
         <label htmlFor="inlineFormCustomSelectPref"> Genre </label>
-        <select value={genre.genre} onChange={handleGenreSelect}>
+        <select
+          value={genre ? genre.genre : ""} //This will set artist to 2 if the value is null
+          onChange={handleGenreSelect}
+        >
           <option disabled value="Choose">
             Choose
           </option>
