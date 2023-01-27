@@ -9,10 +9,9 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 
 function App() {
-  const [modal, setModal] = useState(false)
+
 
   return (
-    <>
     <div className='main-container'>
       <Header />
       <Switch>
@@ -21,7 +20,6 @@ function App() {
       </Switch>
     <Footer />
     </div>
-    </>
   )
 }
 
