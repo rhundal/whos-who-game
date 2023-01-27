@@ -5,11 +5,10 @@ import {
   BsPauseCircleFill,
   BsFillStopCircleFill,
 } from 'react-icons/bs'
-import { HiSpeakerWave, HiSpeakerXMark } from 'react-icons/hi2'
 
 import './Player.css'
 
-function Player({ song }) {
+function Player({ song, index }) {
   const [volumeSlider, setVolumeSlider] = useState(0.5)
   const [seek, setSeek] = useState(0)
   const [toggle, setToggle] = useState(true)
@@ -67,8 +66,12 @@ function Player({ song }) {
     sound.current.volume(e.target.value)
   }
 
+  if (index) {
+    sound.current.stop()
+  }
+
   return (
-    <div className='player-container'>
+    <div className='player-container' style={{ zIndex: index && -1 }}>
       <div className='play-pause-btn'>
         <button className='player-btn' onClick={handlePlaying}>
           {toggle ? <BsFillPlayCircleFill /> : <BsFillStopCircleFill />}
@@ -110,9 +113,6 @@ function Player({ song }) {
           step='0.01'
           onChange={handleVolume}
         />
-        <i>
-          <HiSpeakerWave />
-        </i>
       </div>
     </div>
   )

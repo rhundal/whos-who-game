@@ -62,10 +62,6 @@ const Home = () => {
     });
   }, []);
 
-  if (authLoading || configLoading) {
-    return <div>Loading...</div>;
-  }
-
   const handleSubmit = (e) => {
     localStorage.setItem('genre', JSON.stringify(genre))
     localStorage.setItem('artist', JSON.stringify(artist))
